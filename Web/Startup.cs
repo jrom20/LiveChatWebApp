@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ApplicationCore.Helpers.Extensions;
 
-namespace WebApi
+namespace Web
 {
     public class Startup
     {
@@ -28,6 +28,7 @@ namespace WebApi
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -42,6 +43,8 @@ namespace WebApi
             services.AddAuthentication()
                 .AddCookie();
 
+            services.AddControllersWithViews();
+
             //Dependency Injection Service
             services.AddTransient<AppIdentityDbContextSeed>();
             services.AddSwaggerGen(s => {
@@ -52,7 +55,7 @@ namespace WebApi
                 });
             });
 
-            services.AddControllers();
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowMyOrigin",
@@ -67,6 +70,8 @@ namespace WebApi
                         .Build();
                 });
             });
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +87,7 @@ namespace WebApi
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseNodeModules();
 
             app.UseSwagger();
             app.UseSwaggerUI(setupAction => {
@@ -94,7 +100,9 @@ namespace WebApi
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("Default",
+                    "{controller}/{action}/{id?}",
+                    new { controller = "App", Action = "Index" });
             });
         }
     }
