@@ -9,11 +9,11 @@ namespace WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [Authorize]
     public class AccountController : Controller
     {
+        [HttpGet]
         [Route("login")]
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return Ok("OK");
         }

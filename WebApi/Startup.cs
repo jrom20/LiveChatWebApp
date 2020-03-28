@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ApplicationCore.Helpers.Extensions;
 
 namespace WebApi
 {
@@ -43,13 +44,36 @@ namespace WebApi
 
             //Dependency Injection Service
             services.AddTransient<AppIdentityDbContextSeed>();
+            services.AddSwaggerGen(s => {
+                s.SwaggerDoc("LibraryOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Chat API",
+                    Version = "1"
+                });
+            });
 
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMyOrigin",
+
+                builder =>
+                {
+
+                    builder
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .Build();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("AllowMyOrigin");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,6 +82,11 @@ namespace WebApi
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(setupAction => {
+                setupAction.SwaggerEndpoint("/swagger/LibraryOpenAPISpecification/swagger.json", "Library API");
+            });
 
             app.UseRouting();
             app.UseAuthentication();
