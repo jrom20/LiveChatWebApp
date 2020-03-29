@@ -18,6 +18,8 @@ using Web.Interfaces;
 using Web.Services;
 using ApplicationCore.Services;
 using Web.Hubs;
+using System.Reflection;
+using AutoMapper;
 
 namespace Web
 {
@@ -54,6 +56,7 @@ namespace Web
 
             services.AddControllersWithViews();
 
+            services.AddAutoMapper(Assembly.GetEntryAssembly());
             //Dependency Injection Service
             services.AddTransient<AppIdentityDbContextSeed>();
             services.AddTransient<AppDataContextSeed>();
@@ -61,6 +64,7 @@ namespace Web
             //Dependency Injection
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IChatViewModelService, ChatViewModelService>();
             services.AddScoped<IChatRepository, ChatRepository>();
             services.AddScoped<IChatHubService, ChatHubService>();
 

@@ -13,5 +13,9 @@ namespace ApplicationCore.Entities
         public string IdentityGuid { get; set; }
 
         public ICollection<Message> Messages { get; set; }
+
+        public int ChatId { get; set; }
+        public Chat Chat { get; set; }
+
     }
 }

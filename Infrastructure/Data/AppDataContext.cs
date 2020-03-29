@@ -14,7 +14,6 @@ namespace Infrastructure.Data
         }
 
         public DbSet<Chat> Chats { get; set; }
-        public DbSet<ChatItem> ChatItems { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Person> People { get; set; }
 

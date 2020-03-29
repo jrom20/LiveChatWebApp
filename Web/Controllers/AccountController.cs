@@ -37,7 +37,7 @@ namespace Web.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "App");
+                return RedirectToAction("Rooms", "Chat");
             }
 
             return View();
@@ -46,7 +46,7 @@ namespace Web.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "App");
+                return RedirectToAction("Rooms", "Chat");
             }
 
             return View();

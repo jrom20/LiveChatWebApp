@@ -9,6 +9,7 @@ namespace Web.Interfaces
     public interface IChatHubService
     {
         Task SendMessageAsync(HubMessageViewModel messageRequest);
+        Task SendSystemMessageByConnectionIdAsync(HubMessageViewModel messageRequest, string connectionId);
         Task JoinPersonAsync(HubProfileViewModel profile);
         Task RemovePersonAsync(HubProfileViewModel profile);
     }

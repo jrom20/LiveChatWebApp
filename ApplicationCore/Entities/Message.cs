@@ -13,6 +13,7 @@ namespace ApplicationCore.Entities
         public string TextMessage { get; set; }
         public DateTime CapturedDate { get; set; }
         public Chat Chat { get; set; }
+        public int ChatId { get; set; }
 
     }
 }

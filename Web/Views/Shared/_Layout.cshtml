@@ -4,7 +4,6 @@
     <title>@ViewBag.Title</title>
     <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
 </head>
 <body>
     <header class="container">
@@ -18,7 +17,7 @@
 
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="App" asp-action="Index">Chat</a>
+                        <a class="nav-link" asp-controller="Chat" asp-action="Rooms">Chats</a>
                     </li>
                 </ul>
 
@@ -39,7 +38,6 @@
 
     <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/index.js"></script>
     @RenderSection("scripts", false)
 </body>
 </html>
