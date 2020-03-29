@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,8 +29,10 @@ namespace Web
                     var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var seederIdentity = scope.ServiceProvider.GetService<AppIdentityDbContextSeed>();
+                    var seederData = scope.ServiceProvider.GetService<AppDataContextSeed>();
 
                     await seederIdentity.SeedAsync(userManager, roleManager);
+                    seederData.SeedAsync();
                 }
                 catch (Exception ex)
                 {

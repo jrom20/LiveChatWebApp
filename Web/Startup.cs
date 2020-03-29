@@ -12,6 +12,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ApplicationCore.Helpers.Extensions;
+using Infrastructure.Data;
+using ApplicationCore.Interfaces;
+using Web.Interfaces;
+using Web.Services;
+using ApplicationCore.Services;
+using Web.Hubs;
 
 namespace Web
 {
@@ -28,7 +34,7 @@ namespace Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddSignalR();
             services.AddIdentity<ApplicationUser, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -40,6 +46,9 @@ namespace Web
                 cfg.UseSqlServer(_config.GetConnectionString("IdentityConnectionString"));
             });
 
+            services.AddDbContext<AppDataContext>(c =>
+                c.UseSqlServer(_config.GetConnectionString("DataConnectionString")));
+
             services.AddAuthentication()
                 .AddCookie();
 
@@ -47,6 +56,14 @@ namespace Web
 
             //Dependency Injection Service
             services.AddTransient<AppIdentityDbContextSeed>();
+            services.AddTransient<AppDataContextSeed>();
+
+            //Dependency Injection
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IChatRepository, ChatRepository>();
+            services.AddScoped<IChatHubService, ChatHubService>();
+
             services.AddSwaggerGen(s => {
                 s.SwaggerDoc("LibraryOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
                 {
@@ -62,8 +79,15 @@ namespace Web
 
                 builder =>
                 {
+                    builder 
+                        // Allow add subdomains localHost: 4200,http://*.ngrok.io
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        //"CorsOrigins": "http://localhost:4200,http://*.ngrok.io" en AppSettings.json
 
-                    builder
+                        //App:CorsOrigins in appsettings.json can contain more than one address with splitted by comma.
+                        .WithOrigins(_config["App:CorsOrigins"]
+                        .Split(",", StringSplitOptions.RemoveEmptyEntries).Select(o => o.RemovePostFix("/")).ToArray())
+                        .AllowAnyHeader()
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .AllowCredentials()
@@ -100,9 +124,9 @@ namespace Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute("Default",
-                    "{controller}/{action}/{id?}",
-                    new { controller = "App", Action = "Index" });
+
+                endpoints.MapHub<ChatHub>("hubs/LiveChat");
+                endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", new { controller = "App", Action = "Index" });
             });
         }
     }
