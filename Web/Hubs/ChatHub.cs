@@ -20,7 +20,7 @@ namespace Web.Hubs
             this._hubService = hubService;
         }
 
-        public async Task<string> JoinPerson(string chatId)
+        public async Task JoinPerson(string chatId)
         {
             var identity = (ClaimsIdentity)Context.User.Identity;
             if (identity.IsAuthenticated)
@@ -30,8 +30,6 @@ namespace Web.Hubs
             }
             else
                 throw new ApplicationException("Action requires authentication.");
-
-            return Context.ConnectionId;
         }
 
         public async Task SendMessage(HubMessageViewModel messageRequest)

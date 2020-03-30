@@ -12,7 +12,6 @@ namespace ApplicationCore.Interfaces
         Task AddPersonToChat(string userGuid, int chatId);
         Task<IReadOnlyList<Chat>> GetChatsOnly();
         Task<IEnumerable<Chat>> GetChatsWithPeople();
-        Task<IEnumerable<Message>> GetChatMessagesById(int chatId);
         Task<Chat> GetChatDetails(int chatId);
     }
 }

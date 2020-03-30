@@ -12,25 +12,26 @@ namespace ApplicationCore.Services
     public class ChatService : IChatService
     {
         private readonly IChatRepository _chatRepository;
-        private readonly IAsyncRepository<Message> _messagesRepository;
         private readonly IAsyncRepository<Person> _personRepository;
 
         public ChatService(IChatRepository chatRepository,
-            IAsyncRepository<Message> messagesRepository,
             IAsyncRepository<Person> personRepository)
         {
             this._chatRepository = chatRepository;
-            this._messagesRepository = messagesRepository;
             this._personRepository = personRepository;
         }
 
         public async Task AddPersonToChat(string userGuid, int chatId)
         {
-            await _personRepository.AddAsync(new Person()
+            var existPersonInChat = (await _chatRepository.GetByIdWithItemsAsync(chatId)).People.FirstOrDefault(c => c.ChatId == chatId && c.IdentityGuid == userGuid);
+            if (existPersonInChat != null)
             {
-                IdentityGuid = userGuid,
-                ChatId = chatId
-            });
+                await _personRepository.AddAsync(new Person()
+                {
+                    IdentityGuid = userGuid,
+                    ChatId = chatId
+                });
+            }
         }
 
         public async Task CreateChatAsync(string roomName)
@@ -40,12 +41,6 @@ namespace ApplicationCore.Services
                 RoomName = roomName,
                 StartDate = DateTime.Now
             });
-        }
-
-        public async Task<IEnumerable<Message>> GetChatMessagesById(int chatId)
-        {
-            var messagesList = await _messagesRepository.ListAsync(new MessageFilterPaginatedSpecification(0, 50, chatId));
-            return messagesList;
         }
 
         public async Task<IReadOnlyList<Chat>> GetChatsOnly()

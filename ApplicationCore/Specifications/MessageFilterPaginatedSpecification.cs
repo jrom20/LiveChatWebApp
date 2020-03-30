@@ -11,6 +11,7 @@ namespace ApplicationCore.Specifications
                     : base(i => i.ChatId == chatId) 
         {
             ApplyPaging(skip, take);
+            ApplyOrderByDescending(c => c.Id);
         }
     }
 }

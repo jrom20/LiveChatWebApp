@@ -9,7 +9,7 @@ namespace Web.ViewModels.Hub
     {
         public string ConnectionId { get; set; }
         public string UserName { get; set; }
-        
+        public int RoomId { get; set; }
         private string room;
         public string Room
         {
@@ -21,6 +21,7 @@ namespace Web.ViewModels.Hub
             ConnectionId = connectionId;
             UserName = userName;
             Room = room;
+            RoomId = Convert.ToInt32(room);
         }
     }
 }

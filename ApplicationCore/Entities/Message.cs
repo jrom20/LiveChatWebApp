@@ -14,6 +14,7 @@ namespace ApplicationCore.Entities
         public DateTime CapturedDate { get; set; }
         public Chat Chat { get; set; }
         public int ChatId { get; set; }
+        public Person Person { get; set; }
 
     }
 }

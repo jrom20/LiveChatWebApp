@@ -63,9 +63,12 @@ namespace Web
 
             //Dependency Injection
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IChatService, ChatService>();
-            services.AddScoped<IChatViewModelService, ChatViewModelService>();
             services.AddScoped<IChatRepository, ChatRepository>();
+
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IMessageService, MessageService>();
+
+            services.AddScoped<IChatViewModelService, ChatViewModelService>();
             services.AddScoped<IChatHubService, ChatHubService>();
 
             services.AddSwaggerGen(s => {

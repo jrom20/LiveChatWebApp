@@ -12,15 +12,21 @@ $(function () {
         insertNewMessage(message);
     });
 
+    connection.on("loadMessages", function (messages, id) {
+        messages.map(msg => {
+
+            liveChatId = id;
+            insertNewMessage(msg);
+
+            $("#write_msg").removeAttr('disabled');
+            $("#msg_send_btn").removeAttr('disabled');
+        });
+    });
+
     connection.start().then(function () {
 
         chatId = $("#chatId").val();
         connection.invoke("JoinPerson", chatId)
-            .then((id) => {
-                liveChatId = id;
-                $("#write_msg").removeAttr('disabled');
-                $("#msg_send_btn").removeAttr('disabled');
-            })
             .catch(function (err) {
             return console.error(err.toString());
         });

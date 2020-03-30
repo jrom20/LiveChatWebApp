@@ -9,6 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{CE783708-DFC1-4CA5-BBDF-4617124C017E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bot", "Bot", "{3BAE39B6-7A7C-4817-964E-D0CE4FB84B62}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{1BA343B0-641D-47E3-9106-D11E25E495A5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Host", "Host", "{5F01B9F5-FC99-4B64-A63C-7B05BFF44EA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +36,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1BA343B0-641D-47E3-9106-D11E25E495A5} = {3BAE39B6-7A7C-4817-964E-D0CE4FB84B62}
+		{5F01B9F5-FC99-4B64-A63C-7B05BFF44EA2} = {3BAE39B6-7A7C-4817-964E-D0CE4FB84B62}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3522A320-DC57-4EFB-AD94-E654F8274FEC}

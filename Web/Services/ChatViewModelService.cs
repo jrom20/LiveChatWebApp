@@ -37,9 +37,5 @@ namespace Web.Services
             return chatList;
         }
 
-        public Task JoinPersonToRoomAsync(string userName, string chatId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
