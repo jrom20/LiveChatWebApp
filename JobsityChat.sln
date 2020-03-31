@@ -9,15 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{CE783708-DFC1-4CA5-BBDF-4617124C017E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotStockBus", "BotStockBus", "{61CA25F0-BA55-4F60-AE4C-F2AA9A289E32}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotStockEventBus", "BotStockEventBus", "{61CA25F0-BA55-4F60-AE4C-F2AA9A289E32}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "EventBus\EventBus.csproj", "{6FF76872-BB77-4A4F-8A9E-EC4445F570BB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{AF77A9AF-CF1F-46D5-A176-F968723E63C4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotStandAlone", "BotStandAlone", "{6FEFA552-D8B7-4229-9310-EDEDAAE256D4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotStockStandAlone", "BotStockStandAlone", "{6FEFA552-D8B7-4229-9310-EDEDAAE256D4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotStockEventBusService", "BotStockEventBusService\BotStockEventBusService.csproj", "{D611834A-9A51-4A88-884D-E7493C12ECCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotStock.StandAlone", "BotStock.StandAlone\BotStock.StandAlone.csproj", "{D611834A-9A51-4A88-884D-E7493C12ECCA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9A721D03-1A03-4C7D-A429-86325718432A}"
 EndProject

@@ -1,5 +1,5 @@
-﻿using BotStockEventBusService.Interfaces;
-using BotStockEventBusService.Services.Request;
+﻿using BotStock.StandAlone.Interfaces;
+using BotStock.StandAlone.Services.Request;
 using CsvHelper;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,7 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotStockEventBusService.Services
+namespace BotStock.StandAlone.Services
 {
     public class StockService : IStockService
     {
@@ -38,7 +38,10 @@ namespace BotStockEventBusService.Services
                         {
                             var stockDescription = csvFile.GetRecords<StockDto>()?.FirstOrDefault();
                             if (stockDescription != null)
-                                stockQuote = $"{stockDescription.Symbol} quote is ${stockDescription.Close} per share";
+                                if (await IsValidResult(stockDescription.Close))
+                                    return $"{stockDescription.Symbol} quote is ${stockDescription.Close} per share";
+
+                            stockQuote = $"Unable to find a stock code for '{stockCode}'";
                         }
                     }
                     return stockQuote;
@@ -49,6 +52,14 @@ namespace BotStockEventBusService.Services
             }
         }
 
+        private async Task<bool> IsValidResult(string result)
+        {
+            string[] invalidValues = { "n/d" };
+            if(invalidValues.Contains(result.ToLower().Trim()))
+                return false;
+
+            return true;
+        }
         private async Task<string> GetStockCode(string input)
         {
             var parsedStockCode = input.ToLower().Replace("/stock=", string.Empty).Trim();

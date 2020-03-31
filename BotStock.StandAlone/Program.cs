@@ -1,6 +1,8 @@
-﻿using BotStockEventBusService.EventBus;
-using BotStockEventBusService.Interfaces;
-using BotStockEventBusService.Services;
+﻿using BotStock.StandAlone.Interfaces;
+using BotStock.StandAlone.Services;
+using EventBus.Interfaces;
+using EventBusRabbitMQ;
+using EventBusRabbitMQ.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -9,7 +11,7 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Text;
 
-namespace BotStockEventBusService
+namespace BotStock.StandAlone
 {
     class Program
     {
@@ -31,12 +33,12 @@ namespace BotStockEventBusService
 
             services.AddSingleton<IConfiguration>(configuration);
             services.AddScoped<IStockService, StockService>();
-            services.AddScoped<IEventBus, EventBusRabbitMQ>();
-            services.AddSingleton<IEventBus, EventBusRabbitMQ>(sp =>
+            services.AddScoped<IEventBus, ListenerEventBusRabbitMQ>();
+            services.AddSingleton<IEventBus, ListenerEventBusRabbitMQ>(sp =>
             {
                 var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
                 var stockService = sp.GetRequiredService<IStockService>();
-                return new EventBusRabbitMQ(rabbitMQPersistentConnection, stockService);
+                return new ListenerEventBusRabbitMQ(rabbitMQPersistentConnection, stockService);
             });
 
             var serviceProvider = services.BuildServiceProvider();
@@ -44,7 +46,8 @@ namespace BotStockEventBusService
 
             eventBus.Subscribe();
 
-            Console.WriteLine("Waiting for inputs");
+            Console.WriteLine("Service has been started.");
+            Console.WriteLine("Waiting for messages...");
             Console.ReadKey();
 
         }

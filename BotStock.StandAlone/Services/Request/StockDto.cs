@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BotStockEventBusService.Services.Request
+namespace BotStock.StandAlone.Services.Request
 {
     public class StockDto
     {

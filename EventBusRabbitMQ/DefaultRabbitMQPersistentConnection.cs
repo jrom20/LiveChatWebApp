@@ -10,9 +10,9 @@ namespace EventBusRabbitMQ
     public class DefaultRabbitMQPersistentConnection : IRabbitMQPersistentConnection
     {
         private readonly IConnectionFactory _connectionFactory;
-        private readonly int _retryCount;
-        IConnection _connection;
-        bool _disposed;
+
+        private IConnection _connection;
+        private bool _disposed;
 
         public DefaultRabbitMQPersistentConnection(IConnectionFactory connectionFactory)
         {
@@ -51,7 +51,7 @@ namespace EventBusRabbitMQ
             }
             catch (IOException ex)
             {
-                throw;
+                throw ex;
             }
         }
     }

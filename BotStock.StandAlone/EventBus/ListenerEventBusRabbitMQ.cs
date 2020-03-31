@@ -1,4 +1,7 @@
-﻿using BotStockEventBusService.Interfaces;
+﻿using BotStock.StandAlone.Interfaces;
+using EventBus.Interfaces;
+using EventBus.Requests;
+using EventBusRabbitMQ.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -7,9 +10,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BotStockEventBusService.EventBus
+namespace BotStock.StandAlone
 {
-    public class EventBusRabbitMQ : IEventBus, IDisposable
+    public class ListenerEventBusRabbitMQ : IEventBus, IDisposable
     {
         const string BROKER_NAME = "stockbot_bus";
         const string QUESTION_QUEUE = "chating.signalrhub.question";
@@ -20,7 +23,7 @@ namespace BotStockEventBusService.EventBus
 
         private IModel _consumerChannel;
 
-        public EventBusRabbitMQ(IRabbitMQPersistentConnection persistentConnection, IStockService stockService)
+        public ListenerEventBusRabbitMQ(IRabbitMQPersistentConnection persistentConnection, IStockService stockService)
         {
             _persistentConnection = persistentConnection;
             _consumerChannel = CreateConsumerChannel();
@@ -43,7 +46,7 @@ namespace BotStockEventBusService.EventBus
             return channel;
         }
 
-        public void PublishStock(EventReply @event)
+        public void Publish(EventReply @event)
         {
             using (var newChannel = _persistentConnection.CreateModel())
             {
@@ -102,11 +105,11 @@ namespace BotStockEventBusService.EventBus
             {
                 string stockQuote = await _stockService.GetStockQuote(replyMessage.Message);
                 replyMessage.Message = stockQuote;
-                PublishStock(replyMessage);
+                Publish(replyMessage);
             }
             catch (Exception ex)
             {
-
+                throw;
             }
         }
     }
