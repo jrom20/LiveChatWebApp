@@ -12,15 +12,15 @@ $(function () {
         insertNewMessage(message);
     });
 
-    connection.on("loadMessages", function (messages, id) {
+    connection.on("loadMessages", function(messages, id) {
+        liveChatId = id;
+
         messages.map(msg => {
-
-            liveChatId = id;
             insertNewMessage(msg);
-
-            $("#write_msg").removeAttr('disabled');
-            $("#msg_send_btn").removeAttr('disabled');
         });
+
+        $("#write_msg").removeAttr('disabled');
+        $("#msg_send_btn").removeAttr('disabled');
     });
 
     connection.start().then(function () {
