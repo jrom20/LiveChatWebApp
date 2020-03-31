@@ -24,7 +24,7 @@ This is a real-time chat using the following technologies
 * Run as new instance the executable program which is in BotStockEventBusService assembly to set the listener of Rabbit Queues.
 
 ### Run chat website
-You'll only need register/login to access to the default chat room, it run over Google Chhrome, this approach only shows the use of Entity Framework Core and MVC Core technologies.
+You'll only need register/login to access to the default chat room, its run over Google Chhrome, this approach only shows the use of Entity Framework Core and MVC Core technologies.
 
 ### Stock bot
 It is not 100% implemented, but it still collects data from the following URL https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv 
