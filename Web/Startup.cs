@@ -167,7 +167,7 @@ namespace Web
             {
 
                 endpoints.MapHub<ChatHub>("hubs/LiveChat");
-                endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", new { controller = "App", Action = "Index" });
+                endpoints.MapControllerRoute("Default", "{controller}/{action}/{id?}", new { controller = "Account", Action = "Login" });
             });
         }
     }
