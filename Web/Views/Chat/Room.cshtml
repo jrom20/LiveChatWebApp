@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ChatViewModel>
+@using Microsoft.AspNetCore.Identity
+@using Infrastructure.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewBag.Title = "";
+}
+
+<link href="~/css/Chat/room-chatbox.css" rel="stylesheet" />
+
+@Html.Hidden("chatId", (Int32)ViewBag.ChatId);
+<input type="hidden" value="" id="liveChatId"/>
+
+<div class="container">
+    <h3 class=" text-center">Messaging</h3>
+    <div class="messaging">
+        <div class="inbox_msg">
+            <div class="mesgs">
+                <div id="msg_history" class="msg_history">
+
+                </div>
+                <div class="type_msg">
+                    <div class="input_msg_write">
+                        <input type="text" id="write_msg" class="write_msg" placeholder="Type a message" disabled />
+                        <button id="msg_send_btn" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true" disabled></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/Chat/room.js"></script>
+
+}

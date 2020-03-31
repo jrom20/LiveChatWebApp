@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ChatViewModel>
+@{
+    ViewBag.Title = "Chats";
+}
+
+<div class="card">
+    <div class="card-header">
+        Available Rooms List
+    </div>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table mb-0" *ngIf="products && products.length">
+                <thead>
+                    <tr>
+                        <th>Chat Id</th>
+                        <th>Chat Name</th>
+                        <th>Since</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.ChatId</td>
+                                <td>@item.ChatName</td>
+                                <td>@item.StartedDate.ToString("MM/dd/yyyy")</td>
+                                <td>
+                                    <a class="btn btn-outline-primary btn-sm" asp-controller="Chat" asp-action="Room" asp-route-chatId="@item.ChatId">
+                                        Join
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>No Available Chats</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
