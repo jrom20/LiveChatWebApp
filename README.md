@@ -22,7 +22,7 @@ This is a real-time chat using the following technologies
 * Configure connections string as IdentityConnectionString and DataConnectionString that are located into Web assembly in order to seed the database.
 
 ### Run chat website
-You'll only need register/login to access to the default chat room, it run over Coogle Chhrome, this approach only shows the use of entity framework and mvc technologies.
+You'll only need register/login to access to the default chat room, it run over Google Chhrome, this approach only shows the use of Entity Framework Core and MVC Core technologies.
 
 ### Stock bot
 It is not 100% implemented, but it still collect data from the following URL https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv 
