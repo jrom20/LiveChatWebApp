@@ -23,12 +23,12 @@ namespace ApplicationCore.Services
 
         public async Task AddPersonToChat(string userGuid, int chatId)
         {
-            var existPersonInChat = (await _chatRepository.GetByIdWithItemsAsync(chatId)).People.FirstOrDefault(c => c.ChatId == chatId && c.IdentityGuid == userGuid);
+            var existPersonInChat = (await _chatRepository.GetByIdWithItemsAsync(chatId))?.People?.FirstOrDefault(c => c.ChatId == chatId && c.UserName == userGuid);
             if (existPersonInChat == null)
             {
                 await _personRepository.AddAsync(new Person()
                 {
-                    IdentityGuid = userGuid,
+                    UserName = userGuid,
                     ChatId = chatId
                 });
             }

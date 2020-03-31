@@ -21,7 +21,7 @@ namespace ApplicationCore.Services
 
         public async Task AddNewMessage(int chatId, string userName, string message, DateTime time)
         {
-            var existPersonInChat = (await _chatRepository.GetByIdWithItemsAsync(chatId)).People.FirstOrDefault(c=> c.ChatId == chatId && c.IdentityGuid == userName);
+            var existPersonInChat = (await _chatRepository.GetByIdWithItemsAsync(chatId)).People.FirstOrDefault(c=> c.ChatId == chatId && c.UserName == userName);
             if (existPersonInChat != null)
             {
                 await _messagesRepository.AddAsync(new Message()

@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BotStandAlone", "BotStandAl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BotStockEventBusService", "BotStockEventBusService\BotStockEventBusService.csproj", "{D611834A-9A51-4A88-884D-E7493C12ECCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{9A721D03-1A03-4C7D-A429-86325718432A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{D611834A-9A51-4A88-884D-E7493C12ECCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D611834A-9A51-4A88-884D-E7493C12ECCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D611834A-9A51-4A88-884D-E7493C12ECCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A721D03-1A03-4C7D-A429-86325718432A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A721D03-1A03-4C7D-A429-86325718432A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A721D03-1A03-4C7D-A429-86325718432A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A721D03-1A03-4C7D-A429-86325718432A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

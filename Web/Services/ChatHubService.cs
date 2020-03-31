@@ -44,9 +44,9 @@ namespace Web.Services
                 {
                     ChatId = msg.ChatId,
                     Message = msg.TextMessage,
-                    MessageFrom = msg.Person.IdentityGuid == profile.UserName ? profile.ConnectionId : string.Empty,
+                    MessageFrom = msg.Person.UserName == profile.UserName ? profile.ConnectionId : string.Empty,
                     ReceiveTime = msg.CapturedDate,
-                    UserName = msg.Person.IdentityGuid
+                    UserName = msg.Person.UserName
                 });
             }
 
