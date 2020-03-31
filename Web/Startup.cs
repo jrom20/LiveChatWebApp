@@ -88,15 +88,6 @@ namespace Web
 
 
             services.AddScoped<IEventBus, StockQuoteEventsHandler>();
-            services.AddSingleton<IEventBus, StockQuoteEventsHandler>(sp =>
-            {
-                var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
-                var hubContext = sp.GetRequiredService<IHubContext<ChatHub>>();
-
-                return new StockQuoteEventsHandler(rabbitMQPersistentConnection, hubContext);
-            });
-
-            ConfigureEventBus(services);
 
             services.AddSwaggerGen(s => {
                 s.SwaggerDoc("LibraryOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -132,16 +123,17 @@ namespace Web
 
         }
 
-        private void ConfigureEventBus(IServiceCollection services)
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var eventBus = serviceProvider.GetRequiredService<IEventBus>();
-            eventBus.Subscribe();
-        }
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.Use(async (context, next) =>
+            {
+                var eventBus = context.RequestServices.GetRequiredService<IEventBus>();
+                eventBus.Subscribe();
+
+                await next.Invoke();
+            });
+
             app.UseCors("AllowMyOrigin");
 
             if (env.IsDevelopment())

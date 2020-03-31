@@ -3,6 +3,9 @@ using EventBus.Interfaces;
 using EventBus.Requests;
 using EventBusRabbitMQ.Interfaces;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -26,13 +29,15 @@ namespace Web.Events
 
         private readonly IRabbitMQPersistentConnection _persistentConnection;
         private readonly IHubContext<ChatHub> _hubContext;
+        private readonly IServiceProvider _provider;
 
 
-        public StockQuoteEventsHandler(IRabbitMQPersistentConnection persistentConnection, IHubContext<ChatHub> hubContext)
+        public StockQuoteEventsHandler(IRabbitMQPersistentConnection persistentConnection, IHubContext<ChatHub> hubContext, IServiceProvider provider = null)
         {
             _persistentConnection = persistentConnection;
             _consumerChannel = CreateConsumerChannel();
             _hubContext = hubContext;
+            _provider = provider;
         }
 
         private IModel CreateConsumerChannel()
@@ -123,8 +128,8 @@ namespace Web.Events
             };
 
             var profile = new HubProfileViewModel(activity.ChatId);
-
             await this._hubContext.Clients.Group(profile.Room).SendAsync("receivedMessage", activity);
+
         }
 
     }
