@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Web.Hubs;
 using Web.Interfaces;
 using Web.ViewModels.Hub;
+using ApplicationCore.Helpers.Extensions;
 using ApplicationCore.Constants;
+using EventBus.Interfaces;
 
 namespace Web.Services
 {
@@ -16,12 +18,14 @@ namespace Web.Services
         private readonly IHubContext<ChatHub> _hubContext;
         private readonly IChatService _chatService;
         private readonly IMessageService _messageService;
+        private readonly IEventBus _eventBus;
 
-        public ChatHubService(IHubContext<ChatHub> hubContext, IChatService chatService, IMessageService messageService)
+        public ChatHubService(IHubContext<ChatHub> hubContext, IChatService chatService, IMessageService messageService, IEventBus eventBus)
         {
             _hubContext = hubContext;
             _chatService = chatService;
             _messageService = messageService;
+            _eventBus = eventBus;
         }
 
         public async Task JoinPersonAsync(HubProfileViewModel profile)
@@ -33,6 +37,7 @@ namespace Web.Services
 
             List<HubMessageViewModel> messagesList = new List<HubMessageViewModel>();
             var Messages = await _messageService.GetChatMessagesById(profile.RoomId);
+
             foreach (var msg in Messages.OrderBy(c=>c.Id))
             {
                 messagesList.Add(new HubMessageViewModel
@@ -56,11 +61,18 @@ namespace Web.Services
 
         public async Task SendMessageAsync(HubMessageViewModel messageRequest)
         {
-            var channelName = string.Format($"channel-{messageRequest.ChatId}");
             messageRequest.ReceiveTime = DateTime.Now;
 
-            await _hubContext.Clients.Group(channelName).SendAsync("receivedMessage", messageRequest);
-            await _messageService.AddNewMessage(messageRequest.ChatId, messageRequest.UserName, messageRequest.Message, messageRequest.ReceiveTime.Value);
+            if (messageRequest.Message.IsStockCommand(out string stockCode))
+            {
+                _eventBus.Publish(new EventBus.Requests.EventReply(messageRequest.ChatId, messageRequest.MessageFrom, messageRequest.Message));
+            }
+            else
+            {
+                var profile = new HubProfileViewModel(messageRequest.ChatId);
+                await _hubContext.Clients.Group(profile.Room).SendAsync("receivedMessage", messageRequest);
+                await _messageService.AddNewMessage(messageRequest.ChatId, messageRequest.UserName, messageRequest.Message, messageRequest.ReceiveTime.Value);
+            }
         }
 
         public async Task SendSystemMessageByConnectionIdAsync(HubMessageViewModel messageRequest, string connectionId)

@@ -20,6 +20,12 @@ using ApplicationCore.Services;
 using Web.Hubs;
 using System.Reflection;
 using AutoMapper;
+using EventBusRabbitMQ.Interfaces;
+using RabbitMQ.Client;
+using EventBusRabbitMQ;
+using EventBus.Interfaces;
+using Web.Events;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Web
 {
@@ -64,12 +70,33 @@ namespace Web
             //Dependency Injection
             services.AddScoped(typeof(IAsyncRepository<>), typeof(EfRepository<>));
             services.AddScoped<IChatRepository, ChatRepository>();
-
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IMessageService, MessageService>();
-
             services.AddScoped<IChatViewModelService, ChatViewModelService>();
             services.AddScoped<IChatHubService, ChatHubService>();
+
+            services.AddSingleton<IRabbitMQPersistentConnection>(sp =>
+            {
+                var factory = new ConnectionFactory()
+                {
+                    HostName = "localhost",
+                    DispatchConsumersAsync = true
+                };
+
+                return new DefaultRabbitMQPersistentConnection(factory);
+            });
+
+
+            services.AddScoped<IEventBus, StockQuoteEventsHandler>();
+            services.AddSingleton<IEventBus, StockQuoteEventsHandler>(sp =>
+            {
+                var rabbitMQPersistentConnection = sp.GetRequiredService<IRabbitMQPersistentConnection>();
+                var hubContext = sp.GetRequiredService<IHubContext<ChatHub>>();
+
+                return new StockQuoteEventsHandler(rabbitMQPersistentConnection, hubContext);
+            });
+
+            ConfigureEventBus(services);
 
             services.AddSwaggerGen(s => {
                 s.SwaggerDoc("LibraryOpenAPISpecification", new Microsoft.OpenApi.Models.OpenApiInfo()
@@ -103,6 +130,13 @@ namespace Web
             });
 
 
+        }
+
+        private void ConfigureEventBus(IServiceCollection services)
+        {
+            var serviceProvider = services.BuildServiceProvider();
+            var eventBus = serviceProvider.GetRequiredService<IEventBus>();
+            eventBus.Subscribe();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

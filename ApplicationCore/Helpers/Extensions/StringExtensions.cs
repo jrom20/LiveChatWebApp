@@ -8,6 +8,17 @@ namespace ApplicationCore.Helpers.Extensions
 
     public static class StringExtension
     {
+        public static bool IsStockCommand(this string value, out string stock_code)
+        {
+            stock_code = string.Empty;
+            if (value.ToLower().Trim().StartsWith("/stock="))
+            {
+                stock_code = value.Replace("/stock=", string.Empty).Trim();
+                return true;
+            }
+
+            return false;
+        }
         /// <summary>
         /// Removes first occurrence of the given postfixes from end of the given string.
         /// Ordering is important. If one of the postFixes is matched, others will not be tested.

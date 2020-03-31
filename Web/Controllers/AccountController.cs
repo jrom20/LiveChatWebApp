@@ -96,7 +96,7 @@ namespace Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "App");
+                        return RedirectToAction("Rooms", "Chat");
                     }
                 }
             }
@@ -110,7 +110,7 @@ namespace Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "App");
+            return RedirectToAction("Login", "Account");
         }
 
 

@@ -23,5 +23,10 @@ namespace Web.ViewModels.Hub
             Room = room;
             RoomId = Convert.ToInt32(room);
         }
+        public HubProfileViewModel(int roomId)
+        {
+            Room = roomId.ToString();
+            RoomId = roomId;
+        }
     }
 }
