@@ -65,7 +65,7 @@ namespace Web.Controllers
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
-                    return RedirectToAction("Index", "App");
+                    return RedirectToAction("Index", "Chat");
                 }
                 foreach (var error in result.Errors)
                 {
