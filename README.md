@@ -17,7 +17,7 @@ This is a real-time chat using the following technologies
 * [RabbitMq Server](https://www.rabbitmq.com/download.html) running on default ports.
 
 ## Setup
-`git clone https://github.com/jrom20/jrom20.git`
+`git clone https://github.com/jrom20/LiveChatWebApp`
 
 ### Configurations
 * Configure connections string as IdentityConnectionString and DataConnectionString that are located into Web assembly in order to seed the database.
