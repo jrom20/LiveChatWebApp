@@ -6,6 +6,7 @@ This is a real-time chat using the following technologies
 * Swagger
 * Bootstrap
 * JQuery
+* font-awesome
 * RabbitMq
 * SignalR Core
 * EntityFramework.Core
