@@ -19,7 +19,7 @@ This is a real-time chat using the following technologies
 `git clone https://github.com/jrom20/LiveChatWebApp`
 
 ### Configurations
-* Configure connections string as IdentityConnectionString and DataConnectionString that are located into Web assembly in order to seed the database.
+* Configure connections string as **IdentityConnectionString** and **DataConnectionString** that are located into **Web** -> **appsettings.json** file in order to seed the database. By Default these connections run on localhost, if you have any different server or port it should be update it.
 * Configure the **Web** assembly as Default Start Up.
 * Run as new instance the executable program which is in **BotStock.StandAlone** assembly to set the listener of Rabbit Queues and consume each message.
 
