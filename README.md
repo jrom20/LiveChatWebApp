@@ -11,23 +11,28 @@ This is a real-time chat using the following technologies
 * SignalR Core
 * EntityFramework.Core
 
-
 ### Requirements
-* .net core 3.0
+* [.Net Core](https://dotnet.microsoft.com/download/visual-studio-sdks).
 * [RabbitMq Server](https://www.rabbitmq.com/download.html) running on default ports.
 
 ## Setup
 `git clone https://github.com/jrom20/LiveChatWebApp`
 
 ### Configurations
-* Configure connections string as IdentityConnectionString and DataConnectionString that are located into Web assembly in order to seed the database.
-* Configure the Web Assembly as Default Start Up.
-* Run as new instance the executable program which is in BotStockEventBusService assembly to set the listener of Rabbit Queues.
+* Configure connections string as **IdentityConnectionString** and **DataConnectionString** that are located into **Web** -> **appsettings.json** file in order to seed the database. By Default these connections run on localhost, if you have any different server or port it should be update it.
+* Configure the **Web** assembly as Default Start Up.
+* Run as new instance the executable program which is in **BotStock.StandAlone** assembly to set the listener of Rabbit Queues and consume each message.
 
 ### Run chat website
 You'll only need register/login to access to the default chat room, its run over Google Chhrome, this approach only shows the use of Entity Framework Core and MVC Core technologies.
 
+## Chat Usage
 ### Stock bot
-It is not 100% implemented, but it still collects data from the following URL https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv 
+The Bot Stock is full working it supports any kind of inputs. By default it will shows the last 50 messages that were saved.
+
+Display quotes by submitting the following command:
+**/stock={stock_code}** e.g: `/stock=aapl.us`
+
+those will be extracted and parsed from [stooq.com](https://stooq.com/)
 
 
