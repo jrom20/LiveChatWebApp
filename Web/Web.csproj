@@ -33,8 +33,12 @@
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
-  <Target Name="MyPublishScripts" BeforeTargets="BeforePublish">
+  <Target Name="MyPublishScripts" BeforeTargets="Build">
     <Exec Command="npm install"></Exec>
   </Target>
+
+  <ItemGroup>
+    <Content Include="node_modules\**" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
   
 </Project>
