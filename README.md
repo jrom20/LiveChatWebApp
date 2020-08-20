@@ -1,4 +1,4 @@
-# Jobsity Live Chat
+# Live Chat
 This is a real-time chat using the following technologies
 [Live example](https://40.78.134.166/)
 
