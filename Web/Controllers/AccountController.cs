@@ -22,6 +22,7 @@ namespace Web.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _config;
 
+        //este va se el cambio numero uno aun que no haga el merge
         public AccountController(ILogger<AccountController> logger,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
